@@ -2,6 +2,7 @@ from flask import Flask, request, render_template
 import os
 from vector_store import PineconeDB
 
+
 app = Flask(__name__)
 
 # Folder to store uploaded files
