@@ -1,7 +1,8 @@
 from flask import Flask, request, render_template
 import os
-from vector_store import PineconeDB
+from vector_store import S3Uploader
 
+s3 = S3Uploader()
 
 app = Flask(__name__)
 
@@ -28,8 +29,7 @@ def index():
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
             file.save(file_path)
 
-            pinecone = PineconeDB(file_path=file_path)
-            pinecone.upload_pdf_s3()
+            s3.upload_file(file_path=file_path, bucket_name="webapp-pdfchat")
 
             return render_template('index.html', message=f"File successfully uploaded: {file.filename}")
 
